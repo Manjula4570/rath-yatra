@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Rath Yatra!</title>
+    <style>
+        :root {
+            --primary-color: #FF9800; /* Orange */
+            --secondary-color: #FF5722; /* Deep Orange */
+            --accent-color: #FFC107; /* Amber */
+            --text-color: #5D4037; /* Brownish */
+            --bg-light: #FFF8E1;
+            --bg-container: #FFECB3;
+            --danger-red: #D32F2F;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern font stack */
+            text-align: center;
+            margin: 0;
+            padding: 15px; /* Reduced padding for smaller screens initially */
+            background-color: var(--bg-light);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            color: var(--text-color);
+        }
+        .container {
+            background-color: var(--bg-container);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            max-width: 600px;
+            width: 100%; /* Takes full width up to max-width */
+            border: 2px solid var(--accent-color);
+            position: relative;
+            z-index: 1;
+            box-sizing: border-box;
+        }
+        img.main-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            border: 4px solid var(--primary-color);
+        }
+        .greeting-message {
+            font-size: clamp(1.5em, 4vw, 1.8em); /* Responsive font size */
+            color: var(--danger-red);
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #FFE082;
+            border: 1px solid var(--accent-color);
+            border-radius: 10px;
+            animation: fadeInScale 1.5s ease-out forwards;
+        }
+        .greeting-message h1 {
+            font-size: clamp(1.2em, 5vw, 1.4em);
+            color: #C62828;
+            margin: 0 0 10px 0;
+            font-weight: bold;
+        }
+        .greeting-message p.sender-info {
+            font-size: clamp(0.75em, 3vw, 0.9em);
+            margin-top: 10px;
+        }
+        @keyframes fadeInScale {
+            0% { opacity: 0; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        .input-group {
+            margin-top: 25px;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600; /* Slightly bolder */
+            color: var(--secondary-color);
+            font-size: 1.1em;
+        }
+        input[type="text"] {
+            width: 100%; /* Full width */
+            padding: 14px;
+            margin-bottom: 15px;
+            border: 2px solid var(--accent-color);
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 1em;
+        }
+        input[type="text"]:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 5px rgba(255, 152, 0, 0.5);
+        }
+        button {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 14px 28px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: bold;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 3px 7px rgba(0,0,0,0.2);
+            margin: 8px 5px;
+            width: auto; /* Default auto width */
+        }
+        button:hover, button:focus {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+            outline: none;
+        }
+        button.whatsapp-btn {
+            background: linear-gradient(45deg, #25D366, #128C7E);
+        }
+        button.whatsapp-btn:hover, button.whatsapp-btn:focus {
+            background: linear-gradient(45deg, #1DAE52, #0F7062);
+        }
+        .link-display {
+            margin-top: 25px;
+            padding: 15px;
+            background-color: #FFF3E0;
+            border-radius: 10px;
+            border: 1px solid var(--accent-color);
+            word-break: break-all;
+            display: none;
+        }
+        .link-display p {
+            margin: 0 0 10px 0;
+            font-weight: 600;
+            color: var(--secondary-color);
+        }
+        .link-display .link-controls {
+            display: flex;
+            flex-direction: column; /* Default to column for mobile-first */
+            align-items: stretch; /* Make items take full width in column */
+            gap: 10px;
+            margin-bottom: 10px; /* Space before WhatsApp button */
+        }
+        .link-display .link-controls input[type="text"] {
+            flex-grow: 1;
+            margin-bottom: 0; /* Gap handles spacing */
+        }
+        .link-display .link-controls button { /* Copy button */
+            background: linear-gradient(45deg, #007bff, #0056b3);
+            width: 100%; /* Full width when stacked */
+            margin: 0; /* Remove default button margin */
+        }
+        #whatsappShareBtn {
+            width: 100%; /* Full width when stacked */
+            margin: 0; /* Remove default button margin */
+        }
+
+        /* Fireworks Styles - Further Enhanced */
+        #fireworks-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0;
+            animation-name: burst;
+            animation-timing-function: cubic-bezier(0.1, 0.5, 0.2, 1); /* Smoother, more dynamic */
+            animation-fill-mode: forwards;
+            will-change: transform, opacity, box-shadow;
+            /* Glow effect - using currentColor to match particle's backgroundColor */
+            box-shadow: 0 0 8px 3px currentColor, 0 0 15px 5px rgba(255, 255, 255, 0.5);
+            filter: brightness(1.3);
+        }
+        @keyframes burst {
+            0% {
+                opacity: 1;
+                transform: translateY(20px) scale(0.2); /* Start smaller, slightly lower */
+                filter: brightness(1.8);
+                box-shadow: 0 0 10px 4px currentColor, 0 0 20px 7px rgba(255, 255, 255, 0.6);
+            }
+            20% {
+                opacity: 1;
+                filter: brightness(1.5);
+                transform: translateY(0) scale(0.5);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-350px) translateX(var(--drift-x, 0px)) scale(1.5); /* Travel higher, expand more */
+                box-shadow: 0 0 3px 1px currentColor, 0 0 5px 2px rgba(255, 255, 255, 0.2); /* Dimmer glow as it fades */
+            }
+        }
+
+        /* Responsive Adjustments */
+        @media (min-width: 480px) { /* Screens wider than 480px */
+            body { padding: 20px; }
+            .container { padding: 25px; }
+            .link-display .link-controls {
+                flex-direction: row; /* Input and copy button side-by-side */
+            }
+            .link-display .link-controls button { /* Copy button */
+                width: auto; /* Auto width for copy button */
+                flex-shrink: 0;
+            }
+            #whatsappShareBtn {
+                width: auto; /* Auto width for WhatsApp button */
+                margin-top: 10px; /* Add margin back */
+            }
+        }
+        @media (min-width: 768px) { /* Larger screens */
+            .greeting-message h1 { font-size: 1.6em; }
+            .greeting-message p.sender-info { font-size: 1em; }
+            input[type="text"] { padding: 16px; }
+            button { padding: 16px 32px; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="fireworks-container"></div>
+
+    <audio id="backgroundMusic" loop>
+        <source src="" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <div class="container">
+        <div id="greetingMessage" class="greeting-message">
+            <h1 id="mainGreeting">Jai Jagannath!</h1>
+            <p id="subGreeting">Happy Rath Yatra!</p>
+            <p id="senderNameDisplay" class="sender-info" style="display:none;"></p>
+        </div>
+
+        <img src="data:image/jpeg;base64,<a2f98bad461ab42768d9ebc8b362e36c.jpg>" alt="Rath Yatra" id="rathYatraImage" class="main-image">
+
+        <div class="input-group">
+            <label for="userName">Share your wishes with your name:</label>
+            <input type="text" id="userName" placeholder="Your Name">
+            <button onclick="generateLink()">Create Wishing Link</button>
+        </div>
+
+        <div id="linkDisplayArea" class="link-display">
+            <p>Share this link with your loved ones:</p>
+            <div class="link-controls">
+                <input type="text" id="generatedLink" readonly>
+                <button onclick="copyLink()">Copy</button>
+            </div>
+            <button id="whatsappShareBtn" class="whatsapp-btn" style="display:none;" onclick="shareOnWhatsApp()">
+                Share on WhatsApp
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let generatedNameForSharing = "";
+
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const senderName = urlParams.get('sender');
+            const greetingDiv = document.getElementById('greetingMessage');
+            greetingDiv.style.display = 'block';
+
+            if (senderName) {
+                const senderDisplay = document.getElementById('senderNameDisplay');
+                senderDisplay.textContent = `Wishes from: ${decodeURIComponent(senderName)}`;
+                senderDisplay.style.display = 'block';
+            }
+
+            const imageEl = document.getElementById('rathYatraImage');
+            if (imageEl.src.includes("<img alt="" src="data:image/jpeg;base64,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
